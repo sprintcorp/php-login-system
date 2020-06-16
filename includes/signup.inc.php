@@ -41,7 +41,7 @@ if (isset($_POST["signupbtn"])) {
     else {
         $sql = "SELECT Uidusers FROM users WHERE Uidusers=?";
         $stmt = mysqli_stmt_init($connect);
-        if (!mysqli_stmt_prepare($sql, $stmt)) {
+        if (!mysqli_stmt_prepare($stmt,$sql)) {
             header("location:../signup.php?error=sqlerror=");
             exit();
         } else {
@@ -50,10 +50,10 @@ if (isset($_POST["signupbtn"])) {
             mysqli_stmt_bind_param($stmt, 's', $username);
             mysqli_stmt_execute($stmt);
             //stores the username search result from the DB into $stmt
-            mysqli_store_result($stmt);
+            // mysqli_store_result($stmt);
             //checks how many results(i.e identical to $username) rows we got frm DB
             $resultCheck = mysqli_stmt_num_rows($stmt);
-
+            // dd($resultCheck);
             if ($resultCheck > 0) {
                 header("location:../signup.php?error=usernameisalreadytaken&mail=".$email);
                 exit();
